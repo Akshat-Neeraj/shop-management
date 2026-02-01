@@ -1,17 +1,23 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { 
   Home, 
   Package, 
   ShoppingCart, 
   BarChart3, 
+  Users, 
+  Settings, 
   Menu, 
+  X,
+  Store,
+  LogOut
   LogOut,
   Store
 } from 'lucide-react';
