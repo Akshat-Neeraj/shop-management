@@ -24,8 +24,8 @@ import { db } from '@/lib/firebase';
 
 export default function POSPage() {
   const { user } = useAuth();
-  const { data: inventory } = useInventory(user?.uid);
-  const { addDocument: addSale } = useSales(user?.uid);
+  const { data: inventory } = useInventory(user?.id);
+  const { addDocument: addSale } = useSales(user?.id);
   
   const [cart, setCart] = useState<CartItem[]>([]);
   const [searchTerm, setSearchTerm] = useState('');

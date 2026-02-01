@@ -31,8 +31,8 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 export default function Dashboard() {
   const { user } = useAuth();
-  const { data: inventory } = useInventory(user?.uid);
-  const { data: sales } = useSales(user?.uid);
+  const { data: inventory } = useInventory(user?.id);
+  const { data: sales } = useSales(user?.id);
   const [todayStats, setTodayStats] = useState({
     revenue: 0,
     profit: 0,

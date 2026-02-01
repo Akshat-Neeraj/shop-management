@@ -14,7 +14,7 @@ import Link from 'next/link';
 
 export default function AddItemPage() {
   const { user } = useAuth();
-  const { addDocument } = useInventory(user?.uid);
+  const { addDocument } = useInventory(user?.id);
   const router = useRouter();
   
   const [formData, setFormData] = useState({

@@ -22,7 +22,7 @@ import { InventoryItem } from '@/types';
 
 export default function InventoryPage() {
   const { user } = useAuth();
-  const { data: inventory, loading, error, updateDocument, deleteDocument } = useInventory(user?.uid);
+  const { data: inventory, loading, error, updateDocument, deleteDocument } = useInventory(user?.id);
   const [searchTerm, setSearchTerm] = useState('');
   const [editingItem, setEditingItem] = useState<string | null>(null);
   const [editValue, setEditValue] = useState('');

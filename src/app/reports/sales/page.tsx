@@ -36,8 +36,8 @@ type TimeRange = 'today' | '7days' | '30days' | 'all';
 
 export default function SalesReportPage() {
   const { user } = useAuth();
-  const { data: inventory } = useInventory(user?.uid);
-  const { data: sales, deleteDocument } = useSales(user?.uid);
+  const { data: inventory } = useInventory(user?.id);
+  const { data: sales, deleteDocument } = useSales(user?.id);
   
   const [timeRange, setTimeRange] = useState<TimeRange>('7days');
   const [filteredSales, setFilteredSales] = useState(sales || []);
