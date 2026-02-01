@@ -151,7 +151,7 @@ export default function DemoReportsPage() {
     try {
       // Delete all sales
       for (const sale of filteredSales) {
-        await deleteDocument(sale.id);
+        sale.id && await deleteDocument(sale.id);
       }
       setClearDialogOpen(false);
     } catch (error) {

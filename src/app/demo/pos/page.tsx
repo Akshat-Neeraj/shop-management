@@ -160,7 +160,7 @@ export default function DemoPOSPage() {
               Demo Mode
             </Badge>
             <Sheet open={cartOpen} onOpenChange={setCartOpen}>
-              <SheetTrigger asChild>
+              <SheetTrigger onClick={() => setCartOpen(true)}>
                 <Button className="bg-green-600 hover:bg-green-700 text-white relative">
                   <ShoppingCart className="h-4 w-4 mr-2" />
                   Cart ({cart.length})

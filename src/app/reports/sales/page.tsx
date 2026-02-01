@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import { useInventory, useSales } from '@/hooks/useFirestore';
+import { useAuth } from '@/contexts/SupabaseAuthContext';
+import { useInventory, useSales } from '@/hooks/useSupabase';
 import ProtectedRoute from '@/components/protected-route';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -33,6 +33,8 @@ import { Bar } from 'react-chartjs-2';
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 type TimeRange = 'today' | '7days' | '30days' | 'all';
+
+export const dynamic = 'force-dynamic';
 
 export default function SalesReportPage() {
   const { user } = useAuth();
@@ -77,7 +79,7 @@ export default function SalesReportPage() {
     }
 
     const filtered = sales.filter(sale => {
-      const saleDate = sale.date?.toDate ? sale.date.toDate() : new Date(sale.date);
+      const saleDate = new Date(sale.date);
       return saleDate >= startDate;
     });
 
@@ -158,7 +160,7 @@ export default function SalesReportPage() {
     const dailyData: { [key: string]: { revenue: number; profit: number } } = {};
 
     filteredSales.forEach(sale => {
-      const saleDate = sale.date?.toDate ? sale.date.toDate() : new Date(sale.date);
+      const saleDate = new Date(sale.date);
       const dateKey = saleDate.toLocaleDateString();
 
       if (!dailyData[dateKey]) {

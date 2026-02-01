@@ -104,7 +104,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
       {/* Mobile Sidebar */}
       <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
-        <SheetContent side="left" className="p-0 w-64">
+        <SheetContent className="p-0 w-64">
           <Sidebar />
         </SheetContent>
       </Sheet>
@@ -115,12 +115,12 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         <header className="md:hidden bg-card border-b px-4 py-3">
           <div className="flex items-center justify-between">
             <Sheet>
-              <SheetTrigger asChild>
+              <SheetTrigger onClick={() => setSidebarOpen(true)}>
                 <Button variant="outline" size="icon">
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="p-0 w-64">
+              <SheetContent className="p-0 w-64">
                 <Sidebar />
               </SheetContent>
             </Sheet>

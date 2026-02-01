@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import { useInventory } from '@/hooks/useFirestore';
+import { useAuth } from '@/contexts/SupabaseAuthContext';
+import { useInventory } from '@/hooks/useSupabase';
 import ProtectedRoute from '@/components/protected-route';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -19,6 +19,8 @@ import {
   Filter
 } from 'lucide-react';
 import { InventoryItem } from '@/types';
+
+export const dynamic = 'force-dynamic';
 
 export default function InventoryPage() {
   const { user } = useAuth();

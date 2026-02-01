@@ -22,7 +22,7 @@ interface DemoSale {
 }
 
 interface DemoContextType {
-  user: { id: 'demo-user'; email: 'demo@guptatraders.com' } | null;
+  user: { id: string; email: string } | null;
   loading: boolean;
   signIn: () => Promise<void>;
   signUp: () => Promise<void>;
@@ -33,7 +33,7 @@ interface DemoContextType {
 const DemoContext = createContext<DemoContextType | undefined>(undefined);
 
 export function DemoAuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<{ id: 'demo-user'; email: 'demo@guptatraders.com' } | null>(null);
+  const [user, setUser] = useState<{ id: string; email: string } | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {

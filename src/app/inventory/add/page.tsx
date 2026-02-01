@@ -2,15 +2,18 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/contexts/AuthContext';
-import { useInventory } from '@/hooks/useFirestore';
+import { useAuth } from '@/contexts/SupabaseAuthContext';
+import { useInventory } from '@/hooks/useSupabase';
 import ProtectedRoute from '@/components/protected-route';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, Save, Package } from 'lucide-react';
 import Link from 'next/link';
+
+export const dynamic = 'force-dynamic';
 
 export default function AddItemPage() {
   const { user } = useAuth();
@@ -87,7 +90,7 @@ export default function AddItemPage() {
         stockLevel: parseInt(formData.stockLevel),
         lowStockThreshold: parseInt(formData.lowStockThreshold),
         lastSoldDate: null,
-        userId: user!.uid
+        userId: user!.id
       });
       
       router.push('/inventory');

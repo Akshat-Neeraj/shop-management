@@ -29,6 +29,8 @@ import { Bar } from 'react-chartjs-2';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
+export const dynamic = 'force-dynamic';
+
 export default function Dashboard() {
   const { user } = useAuth();
   const { data: inventory } = useInventory(user?.id);

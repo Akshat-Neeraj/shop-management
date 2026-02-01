@@ -187,17 +187,17 @@ export default function DemoInventoryPage() {
                                 className="w-20 bg-gray-700 border-gray-600 text-white"
                                 onKeyPress={(e) => {
                                   if (e.key === 'Enter') {
-                                    handleStockSave(item.id);
+                                    item.id && handleStockSave(item.id);
                                   }
                                 }}
-                                onBlur={() => handleStockSave(item.id)}
+                                onBlur={() => item.id && handleStockSave(item.id)}
                                 autoFocus
                               />
                             </div>
                           ) : (
                             <div
                               className="cursor-pointer hover:text-purple-400 transition-colors"
-                              onClick={() => handleStockEdit(item.id, item.stockLevel)}
+                              onClick={() => item.id && handleStockEdit(item.id, item.stockLevel)}
                             >
                               <span className="text-white font-medium">{item.stockLevel}</span>
                               <Edit className="inline h-3 w-3 ml-1 text-gray-400" />
@@ -221,7 +221,7 @@ export default function DemoInventoryPage() {
                               size="sm"
                               className="border-red-600 text-red-400 hover:bg-red-600 hover:text-white"
                               onClick={() => {
-                                setItemToDelete(item.id);
+                                item.id && setItemToDelete(item.id);
                                 setDeleteDialogOpen(true);
                               }}
                             >

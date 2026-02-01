@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import { useInventory, useSales } from '@/hooks/useFirestore';
+import { useAuth } from '@/contexts/SupabaseAuthContext';
+import { useInventory, useSales } from '@/hooks/useSupabase';
 import ProtectedRoute from '@/components/protected-route';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -19,12 +19,12 @@ import {
   Search
 } from 'lucide-react';
 import { CartItem, InventoryItem } from '@/types';
-import { collection, addDoc, serverTimestamp, writeBatch, doc } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+
+export const dynamic = 'force-dynamic';
 
 export default function POSPage() {
   const { user } = useAuth();
-  const { data: inventory } = useInventory(user?.id);
+  const { data: inventory, updateDocument } = useInventory(user?.id);
   const { addDocument: addSale } = useSales(user?.id);
   
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -113,26 +113,22 @@ export default function POSPage() {
         })),
         total: getTotal(),
         profit: getProfit(),
-        date: serverTimestamp(),
-        userId: user!.uid
+        date: new Date().toISOString(),
+        userId: user!.id
       };
 
       await addSale(saleData);
 
-      // Update inventory stock levels atomically
-      const batch = writeBatch(db);
-      cart.forEach(cartItem => {
+      // Update inventory stock levels
+      for (const cartItem of cart) {
         const inventoryItem = inventory?.find(item => item.id === cartItem.itemId);
         if (inventoryItem) {
-          const itemRef = doc(db, 'inventoryItems', cartItem.itemId);
-          batch.update(itemRef, {
+          await updateDocument(cartItem.itemId, {
             stockLevel: inventoryItem.stockLevel - cartItem.quantity,
-            lastSoldDate: serverTimestamp()
+            lastSoldDate: new Date().toISOString()
           });
         }
-      });
-
-      await batch.commit();
+      }
 
       // Clear cart
       setCart([]);
@@ -153,7 +149,7 @@ export default function POSPage() {
             <p className="text-muted-foreground">Process sales and manage transactions</p>
           </div>
           <Sheet open={cartOpen} onOpenChange={setCartOpen}>
-            <SheetTrigger asChild>
+            <SheetTrigger onClick={() => setCartOpen(true)}>
               <Button size="lg" className="relative">
                 <ShoppingCart className="h-4 w-4 mr-2" />
                 Cart ({cart.length})
