@@ -18,8 +18,6 @@ import {
   X,
   Store,
   LogOut
-  LogOut,
-  Store
 } from 'lucide-react';
 
 const navigation = [
