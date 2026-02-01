@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { AuthProvider } from "@/contexts/AuthContext";
+import { AuthProvider } from "@/contexts/SupabaseAuthContext";
 
 export const metadata: Metadata = {
   title: "Gupta Traders - Inventory Management",

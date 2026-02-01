@@ -6,8 +6,9 @@ export interface InventoryItem {
   costPrice: number;
   stockLevel: number;
   lowStockThreshold: number;
-  lastSoldDate?: Date | null;
+  lastSoldDate?: Date | string | null;
   userId: string;
+  created_at?: string;
 }
 
 export interface Sale {
@@ -15,8 +16,9 @@ export interface Sale {
   items: SaleItem[];
   total: number;
   profit: number;
-  date: Date;
+  date: Date | string;
   userId: string;
+  created_at?: string;
 }
 
 export interface SaleItem {

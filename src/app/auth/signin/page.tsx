@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -26,8 +26,12 @@ export default function SignIn() {
     setError('');
 
     try {
-      await signIn(email, password);
-      router.push('/');
+      const { error } = await signIn(email, password);
+      if (error) {
+        setError(error.message);
+      } else {
+        router.push('/');
+      }
     } catch (err: any) {
       setError(err.message || 'Failed to sign in');
     } finally {
@@ -40,8 +44,10 @@ export default function SignIn() {
     setError('');
 
     try {
-      await signInWithGoogle();
-      router.push('/');
+      const { error } = await signInWithGoogle();
+      if (error) {
+        setError(error.message);
+      }
     } catch (err: any) {
       setError(err.message || 'Failed to sign in with Google');
     } finally {

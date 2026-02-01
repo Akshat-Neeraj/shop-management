@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -39,8 +39,12 @@ export default function SignUp() {
     }
 
     try {
-      await signUp(email, password);
-      router.push('/');
+      const { error } = await signUp(email, password);
+      if (error) {
+        setError(error.message);
+      } else {
+        router.push('/');
+      }
     } catch (err: any) {
       setError(err.message || 'Failed to create account');
     } finally {

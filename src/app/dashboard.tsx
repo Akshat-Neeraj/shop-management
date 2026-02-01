@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useAuth } from '@/contexts/AuthContext';
-import { useInventory, useSales } from '@/hooks/useFirestore';
+import { useAuth } from '@/contexts/SupabaseAuthContext';
+import { useInventory, useSales } from '@/hooks/useSupabase';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -53,12 +53,12 @@ export default function Dashboard() {
     weekStart.setDate(weekStart.getDate() - 7);
 
     const todaySales = sales.filter(sale => {
-      const saleDate = sale.date?.toDate ? sale.date.toDate() : new Date(sale.date);
+      const saleDate = sale.date instanceof Date ? sale.date : new Date(sale.date);
       return saleDate >= todayStart;
     });
 
     const weekSales = sales.filter(sale => {
-      const saleDate = sale.date?.toDate ? sale.date.toDate() : new Date(sale.date);
+      const saleDate = sale.date instanceof Date ? sale.date : new Date(sale.date);
       return saleDate >= weekStart;
     });
 
@@ -102,7 +102,7 @@ export default function Dashboard() {
       dayEnd.setDate(dayEnd.getDate() + 1);
 
       const daySales = sales?.filter(sale => {
-        const saleDate = sale.date?.toDate ? sale.date.toDate() : new Date(sale.date);
+        const saleDate = sale.date instanceof Date ? sale.date : new Date(sale.date);
         return saleDate >= dayStart && saleDate < dayEnd;
       }) || [];
 
